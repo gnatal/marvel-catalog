@@ -3,7 +3,7 @@ import React from "react";
 
 const DesktopNavBar: React.FC = () => {
   return (
-    <nav className="bg-gray-800 text-white p-4">
+    <nav className="bg-gray-800 text-white p-4 hidden md:block">
       <div className="container mx-auto flex justify-between items-center">
         <Link
           href="/"

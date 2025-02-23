@@ -50,7 +50,7 @@ export default async function Home() {
             url: `/series/${serie.id}`,
           }
         })}
-        title="Characters"
+        title="Series"
       />
     </div>
   );

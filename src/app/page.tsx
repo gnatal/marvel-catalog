@@ -1,24 +1,20 @@
-import { getAllEvents } from "@/intergations/marvel/events/getAll";
-import Image from "next/image";
+import Carousel from "@/components/carrousel";
+import { getAllCharacters } from "@/intergations/marvel/characters/getAll";
 
 export default async function Home() {
-  const events = await getAllEvents();
-  console.log(events);
+  const characters = await getAllCharacters();
+
   return (
     <div className="">
-      <div className="grid grid-cols-2 sm:grid-cols-5 gap-8">
-        {events.map((event) => (
-          <div key={event.id}>
-            <p>{event.title}</p>
-            <Image
-              src={`${event.thumbnail.path}.${event.thumbnail.extension}`}
-              alt={event.title}
-              width={200}
-              height={200}
-            />
-          </div>
-        ))}
-      </div>
+      <Carousel
+        items={characters.map((character) => {
+          return {
+            image: `${character.thumbnail.path}.${character.thumbnail.extension}`,
+            title: character.name,
+            url: `/characters/${character.id}`,
+          }
+        })}
+      />
     </div>
   );
 }

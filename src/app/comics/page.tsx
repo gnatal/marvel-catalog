@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default async function Comics() {
   const comics = await getAllComics();
-  console.log(comics);
+  
   return (
     <div className="">
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-8">

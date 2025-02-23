@@ -1,7 +1,7 @@
 "use server";
 import { env } from "@/config/loadenv";
 import { generateAuthParams } from "../authentication";
-import { MarvelCharacter, MarvelResponse } from "../types";
+import { MarvelCreator, MarvelResponse } from "../types";
 
 export const getAllCreators = async () => {
   const { MARVEL_API_PUBLIC_KEY, MARVEL_API_PRIVATE_KEY, MARVEL_API_URL } = env;
@@ -11,6 +11,6 @@ export const getAllCreators = async () => {
       MARVEL_API_PRIVATE_KEY || ""
     )}`
   );
-  const data = (await response.json()) as MarvelResponse<MarvelCharacter>;
+  const data = (await response.json()) as MarvelResponse<MarvelCreator>;
   return data.data.results;
 };

@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default async function Home() {
   const events = await getAllEvents();
-  console.log(events);
+  
   return (
     <div className="">
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-8">

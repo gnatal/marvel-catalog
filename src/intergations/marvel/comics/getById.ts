@@ -1,16 +1,16 @@
 "use server";
 import { env } from "@/config/loadenv";
 import { generateAuthParams } from "../authentication";
-import { MarvelStory, MarvelResponse } from "../types";
+import { MarvelComics, MarvelResponse } from "../types";
 
-export const getAllStories = async () => {
+export const getComicsById = async (id:number) => {
   const { MARVEL_API_PUBLIC_KEY, MARVEL_API_PRIVATE_KEY, MARVEL_API_URL } = env;
   const response = await fetch(
-    `${MARVEL_API_URL}/v1/public/stories${generateAuthParams(
+    `${MARVEL_API_URL}/v1/public/comics/${id}${generateAuthParams(
       MARVEL_API_PUBLIC_KEY || "",
       MARVEL_API_PRIVATE_KEY || ""
     )}`
   );
-  const data = (await response.json()) as MarvelResponse<MarvelStory>;
-  return data.data.results;
+  const data = (await response.json()) as MarvelResponse<MarvelComics>;
+  return data.data.results[0];
 };

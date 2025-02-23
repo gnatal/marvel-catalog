@@ -15,11 +15,11 @@ interface CarouselProps {
 
 const Carousel: React.FC<CarouselProps> = ({ items, title }) => {
     return (
-      <div className={`relative w-screen h-screen p-4 bg-gray-900 ${styles["no-scrollbar"]}`}>
+      <div className={`relative w-screen p-4 bg-gray-900 ${styles["no-scrollbar"]}`}>
         <h2 className="text-2xl text-left font-bold text-white mb-4">
           {title}
         </h2>
-        <div className="flex overflow-x-auto space-x-4 py-4">
+        <div className={`w-full flex overflow-x-auto space-x-4 py-4 ${styles["no-scrollbar"]}`}>
           {items.map((item, index) => (
             <Link
               href={item.url}

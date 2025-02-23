@@ -139,3 +139,145 @@ export type MarvelComics = {
         returned: number;
     }
 }
+
+
+export type MarvelSeries =  {
+    id: number;
+    title: string;
+    description: string | null;
+    resourceURI: string;
+    urls: Array<{
+      type: string;
+      url: string;
+    }>;
+    startYear: number;
+    endYear: number;
+    rating: string;
+    type: string;
+    modified: string;
+    thumbnail: {
+      path: string;
+      extension: string;
+    };
+    creators: {
+      available: number;
+      collectionURI: string;
+      items: Array<{
+        resourceURI: string;
+        name: string;
+        role: string;
+      }>;
+      returned: number;
+    };
+    characters: {
+      available: number;
+      collectionURI: string;
+      items: Array<{
+        resourceURI: string;
+        name: string;
+      }>;
+      returned: number;
+    };
+    stories: {
+      available: number;
+      collectionURI: string;
+      items: Array<{
+        resourceURI: string;
+        name: string;
+        type: string;
+      }>;
+      returned: number;
+    };
+    comics: {
+      available: number;
+      collectionURI: string;
+      items: Array<{
+        resourceURI: string;
+        name: string;
+      }>;
+      returned: number;
+    };
+    events: {
+      available: number;
+      collectionURI: string;
+      items: unknown[];
+      returned: number;
+    };
+    next: null;
+    previous: null;
+  }
+  
+
+  export type MarvelEvent =  {
+    id: number;
+    title: string;
+    description: string;
+    resourceURI: string;
+    urls: Array<{
+      type: string;
+      url: string;
+    }>;
+    modified: string;
+    start: string;
+    end: string;
+    thumbnail: {
+      path: string;
+      extension: string;
+    };
+    creators: {
+      available: number;
+      collectionURI: string;
+      items: Array<{
+        resourceURI: string;
+        name: string;
+        role: string;
+      }>;
+      returned: number;
+    };
+    characters: {
+      available: number;
+      collectionURI: string;
+      items: Array<{
+        resourceURI: string;
+        name: string;
+      }>;
+      returned: number;
+    };
+    stories: {
+      available: number;
+      collectionURI: string;
+      items: Array<{
+        resourceURI: string;
+        name: string;
+        type: string;
+      }>;
+      returned: number;
+    };
+    comics: {
+      available: number;
+      collectionURI: string;
+      items: Array<{
+        resourceURI: string;
+        name: string;
+      }>;
+      returned: number;
+    };
+    series: {
+      available: number;
+      collectionURI: string;
+      items: Array<{
+        resourceURI: string;
+        name: string;
+      }>;
+      returned: number;
+    };
+    next: {
+      resourceURI: string;
+      name: string;
+    } | null;
+    previous: {
+      resourceURI: string;
+      name: string;
+    } | null;
+  }
+  

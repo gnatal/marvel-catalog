@@ -1,0 +1,118 @@
+Below is a list of the endpoints defined in the uploaded API file for the Marvel API:
+
+/v1/public/characters
+Fetches a list of comic characters with various query parameters.
+
+/v1/public/characters/{characterId}
+Retrieves a single character by its ID.
+
+/v1/public/characters/{characterId}/comics
+Retrieves comics in which a specific character appears.
+
+/v1/public/characters/{characterId}/events
+Retrieves events in which a specific character appears.
+
+/v1/public/characters/{characterId}/series
+Retrieves comic series that feature a specific character.
+
+/v1/public/characters/{characterId}/stories
+Retrieves comic stories that feature a specific character.
+
+/v1/public/comics
+Fetches a list of comics with optional filters.
+
+/v1/public/comics/{comicId}
+Retrieves a single comic by its ID.
+
+/v1/public/comics/{comicId}/characters
+Retrieves characters appearing in a specific comic.
+
+/v1/public/comics/{comicId}/creators
+Retrieves comic creators whose work appears in a specific comic.
+
+/v1/public/comics/{comicId}/events
+Retrieves events in which a specific comic appears.
+
+/v1/public/comics/{comicId}/stories
+Retrieves stories contained in a specific comic.
+
+/v1/public/creators
+Fetches a list of comic creators.
+
+/v1/public/creators/{creatorId}
+Retrieves a single creator by its ID.
+
+/v1/public/creators/{creatorId}/comics
+Retrieves comics that feature work by a specific creator.
+
+/v1/public/creators/{creatorId}/events
+Retrieves events that feature work by a specific creator.
+
+/v1/public/creators/{creatorId}/series
+Retrieves comic series in which a specific creator's work appears.
+
+/v1/public/creators/{creatorId}/stories
+Retrieves comic stories in which a specific creator has participated.
+
+/v1/public/events
+Fetches a list of events.
+
+/v1/public/events/{eventId}
+Retrieves a single event by its ID.
+
+/v1/public/events/{eventId}/characters
+Retrieves characters that appear in a specific event.
+
+/v1/public/events/{eventId}/comics
+Retrieves comics that take place during a specific event.
+
+/v1/public/events/{eventId}/creators
+Retrieves creators whose work appears in a specific event.
+
+/v1/public/events/{eventId}/series
+Retrieves series associated with a specific event.
+
+/v1/public/events/{eventId}/stories
+Retrieves stories associated with a specific event.
+
+/v1/public/series
+Fetches a list of comic series.
+
+/v1/public/series/{seriesId}
+Retrieves a single series by its ID.
+
+/v1/public/series/{seriesId}/characters
+Retrieves characters that appear in a specific series.
+
+/v1/public/series/{seriesId}/comics
+Retrieves comics that are part of a specific series.
+
+/v1/public/series/{seriesId}/creators
+Retrieves creators whose work appears in a specific series.
+
+/v1/public/series/{seriesId}/events
+Retrieves events that occur in a specific series.
+
+/v1/public/series/{seriesId}/stories
+Retrieves stories that are part of a specific series.
+
+/v1/public/stories
+Fetches a list of comic stories.
+
+/v1/public/stories/{storyId}
+Retrieves a single story by its ID.
+
+/v1/public/stories/{storyId}/characters
+Retrieves characters that appear in a specific story.
+
+/v1/public/stories/{storyId}/comics
+Retrieves comics in which a specific story appears.
+
+/v1/public/stories/{storyId}/creators
+Retrieves creators whose work appears in a specific story.
+
+/v1/public/stories/{storyId}/events
+Retrieves events that are associated with a specific story.
+
+/v1/public/stories/{storyId}/series
+Retrieves series in which a specific story takes place.

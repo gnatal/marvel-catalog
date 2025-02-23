@@ -5,7 +5,7 @@ export default async function Home() {
   const characters = await getAllCharacters();
 
   return (
-    <div className="">
+    <div className="h-screen w-screen overflow-hidden ">
       <Carousel
         items={characters.map((character) => {
           return {
@@ -14,6 +14,7 @@ export default async function Home() {
             url: `/characters/${character.id}`,
           }
         })}
+        title="Characters"
       />
     </div>
   );

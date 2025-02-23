@@ -9,7 +9,7 @@ const DesktopNavBar: React.FC = () => {
           href="/"
           className="text-2xl font-bold hover:text-yellow-400 transition-colors"
         >
-          <div className="text-2xl font-bold">Marvel API</div>
+          <div className="text-2xl font-bold">Marvel Catalog</div>
         </Link>
 
         <ul className="flex space-x-6">

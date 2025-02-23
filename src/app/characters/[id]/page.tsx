@@ -26,7 +26,7 @@ export default async function CharacterPage({
         width={200}
         height={200}
       />
-      <Carousel items={comics.map((comic) => ({
+      <Carousel title="Related comics" items={comics.map((comic) => ({
         image: `${comic.thumbnail.path}.${comic.thumbnail.extension}`,
         title: comic.title,
         url: `/comics/${comic.id}`,

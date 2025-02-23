@@ -1,7 +1,7 @@
 import { getAllComics } from "@/intergations/marvel/comics/getAll";
 import Image from "next/image";
 
-export default async function Home() {
+export default async function Comics() {
   const comics = await getAllComics();
   console.log(comics);
   return (

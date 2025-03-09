@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 const DesktopNavBar: React.FC = () => {
   const pathname = usePathname();
 
-  // Navigation items
   const navItems = [
     { name: "Comics", path: "/comics" },
     { name: "Series", path: "/series" },
@@ -17,9 +16,8 @@ const DesktopNavBar: React.FC = () => {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 backdrop-blur-sm bg-black/80 border-b border-cyan-900/50">
+    <nav className="hidden md:block sticky top-0 z-50 backdrop-blur-sm bg-black/80 border-b border-cyan-900/50">
       <div className="container mx-auto px-4 flex justify-between items-center h-16">
-        {/* Logo */}
         <Link
           href="/"
           className="group relative"

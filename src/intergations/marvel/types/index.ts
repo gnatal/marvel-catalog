@@ -111,7 +111,8 @@ export type MarvelComics = {
   creators: {
     available: number;
     collectionURI: string;
-    items: [];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    items: any[];
     returned: number;
   };
   characters: {

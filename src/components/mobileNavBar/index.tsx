@@ -1,103 +1,71 @@
 "use client"
-import { useState } from "react";
 import Link from "next/link";
-
-import { 
-  HomeIcon, 
-  UserPlusIcon, 
-  Bars3Icon, 
-  XMarkIcon 
-} from "@heroicons/react/24/outline";
+import React from "react";
+import { usePathname } from "next/navigation";
 
 const MobileNavBar: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  const navItems = [
+    { name: "Home", path: "/", icon: "⌂" },
+    { name: "Comics", path: "/comics", icon: "◈" },
+    { name: "Characters", path: "/characters", icon: "⦿" },
+    { name: "Series", path: "/series", icon: "❖" },
+    { name: "Events", path: "/events", icon: "◎" },
+  ];
 
   return (
-    <>
-      <nav className="fixed bottom-0 w-full bg-gray-800 text-white flex justify-around items-center py-2 md:hidden">
-        <Link href="/">
-          <div className="flex flex-col items-center cursor-pointer">
-            <HomeIcon className="h-5 w-5 mb-1" />
-            <span className="text-sm">Home</span>
-          </div>
-        </Link>
-
-        <Link href="/signup">
-          <div className="flex flex-col items-center cursor-pointer">
-            <UserPlusIcon className="h-5 w-5 mb-1" />
-            <span className="text-sm">Signup</span>
-          </div>
-        </Link>
-
-        {/* Menu Button */}
-        <button
-          onClick={toggleMenu}
-          className="flex flex-col items-center focus:outline-none"
-        >
-          <Bars3Icon className="h-5 w-5 mb-1" />
-          <span className="text-sm">Menu</span>
-        </button>
-      </nav>
-
-      {isMenuOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40"
-          onClick={toggleMenu}
-        />
-      )}
-
-      <div
-        className={`fixed top-0 right-0 h-full w-64 bg-gray-900 text-white z-50 transform transition-transform ${
-          isMenuOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        <div className="p-4">
-          <button
-            className="text-right w-full mb-4 focus:outline-none"
-            onClick={toggleMenu}
-          >
-            <XMarkIcon className="h-6 w-6 inline-block mr-2" />
-          </button>
-
-          <ul className="space-y-4">
-            <li>
-              <Link href="/comics" onClick={() => setIsMenuOpen(false)}>
-                Comics
-              </Link>
-            </li>
-            <li>
-              <Link href="/series" onClick={() => setIsMenuOpen(false)}>
-                Series
-              </Link>
-            </li>
-            <li>
-              <Link href="/creators" onClick={() => setIsMenuOpen(false)}>
-                Creators
-              </Link>
-            </li>
-            <li>
-              <Link href="/events" onClick={() => setIsMenuOpen(false)}>
-                Events
-              </Link>
-            </li>
-            <li>
-              <Link href="/stories" onClick={() => setIsMenuOpen(false)}>
-                Stories
-              </Link>
-            </li>
-            <li>
-              <Link href="/characters" onClick={() => setIsMenuOpen(false)}>
-                Characters
-              </Link>
-            </li>
-          </ul>
-        </div>
+    <nav className="fixed bottom-0 w-full z-50 md:hidden border-t border-cyan-900/50 bg-black/90 backdrop-blur-md">
+      <div className="grid grid-cols-5 h-16">
+        {navItems.map((item) => {
+          const isActive = pathname === item.path;
+          
+          return (
+            <Link
+              key={item.name}
+              href={item.path}
+              className="relative flex flex-col items-center justify-center group"
+            >
+              {/* Top highlight bar for active item */}
+              {isActive && (
+                <div className="absolute top-0 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-cyan-500 to-fuchsia-500"></div>
+              )}
+              
+              {/* Icon */}
+              <div className={`text-lg mb-1 ${
+                isActive 
+                  ? "text-cyan-400" 
+                  : "text-gray-500 group-hover:text-white"
+              }`}>
+                {item.icon}
+              </div>
+              
+              {/* Label */}
+              <div className={`text-xs font-mono ${
+                isActive 
+                  ? "text-cyan-400" 
+                  : "text-gray-500 group-hover:text-white"
+              }`}>
+                {isActive ? `[${item.name}]` : item.name}
+              </div>
+              
+              {/* Bottom glow for active state */}
+              {isActive && (
+                <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-12 h-1 bg-cyan-500/20 blur-sm"></div>
+              )}
+              
+              {/* Highlight overlay on hover */}
+              <div className="absolute inset-0 bg-gradient-to-t from-cyan-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </Link>
+          );
+        })}
       </div>
-    </>
+      
+      {/* Decorative element */}
+      <div className="absolute -top-6 left-1/2 transform -translate-x-1/2">
+        <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-cyan-500 to-transparent"></div>
+      </div>
+    </nav>
   );
 };
 

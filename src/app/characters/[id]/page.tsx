@@ -45,9 +45,7 @@ export default async function CharacterPage({
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Character hero section */}
       <div className="relative">
-        {/* Background elements */}
         <div className="absolute inset-0 bg-gradient-to-b from-fuchsia-900/20 via-black to-black z-0"></div>
         <div className="absolute inset-0 bg-[url('/cyber-grid.png')] opacity-10 z-0"></div>
         <div
@@ -56,13 +54,10 @@ export default async function CharacterPage({
 
         <div className="container mx-auto px-4 py-16 relative z-10">
           <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
-            {/* Character image with cyberpunk frame */}
             <div className="relative">
-              {/* Decorative corners */}
               <div className="absolute -top-2 -left-2 w-8 h-8 border-t-2 border-l-2 border-cyan-400 z-20"></div>
               <div className="absolute -bottom-2 -right-2 w-8 h-8 border-b-2 border-r-2 border-fuchsia-500 z-20"></div>
 
-              {/* Main image container */}
               <div className="relative w-64 h-64 md:w-80 md:h-80 overflow-hidden border border-gray-800">
                 <Image
                   src={`${character.thumbnail.path}.${character.thumbnail.extension}`}
@@ -71,22 +66,18 @@ export default async function CharacterPage({
                   className="object-cover"
                 />
 
-                {/* Overlay effects */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
                 <div
                   className={`absolute inset-0 bg-[url('/scanline.png')] opacity-30 ${styles.scanline}`}
                 ></div>
 
-                {/* Character ID display */}
                 <div className="absolute top-3 left-3 bg-black/80 backdrop-blur-sm px-2 py-1 text-xs font-mono text-cyan-400 border border-cyan-900/50">
                   ID:#{character.id}
                 </div>
               </div>
             </div>
 
-            {/* Character info */}
             <div className="max-w-2xl flex-grow">
-              {/* Character name with cyber effect */}
               <div className="mb-6">
                 <div className="text-xs font-mono text-gray-500 mb-1">
                   CHARACTER.PROFILE
@@ -97,7 +88,6 @@ export default async function CharacterPage({
                 <div className="h-1 w-32 bg-gradient-to-r from-cyan-500 to-fuchsia-500 mt-4"></div>
               </div>
 
-              {/* Character description in cyber terminal style */}
               <div className="font-mono text-sm space-y-4">
                 <div className="bg-black/50 border border-gray-800 p-4">
                   <div className="flex items-center mb-2">
@@ -111,7 +101,6 @@ export default async function CharacterPage({
                   </p>
                 </div>
 
-                {/* Character metadata */}
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-black/50 border border-gray-800 p-4">
                     <div className="text-xs text-fuchsia-400 mb-2">
@@ -162,7 +151,6 @@ export default async function CharacterPage({
         </div>
       </div>
 
-      {/* Use the Carousel component */}
       <Carousel
         title="Related comics"
         items={comics.map((comic) => ({

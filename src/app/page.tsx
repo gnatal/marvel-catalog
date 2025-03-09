@@ -13,18 +13,13 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen w-screen overflow-x-hidden bg-black text-white">
-      {/* Cyberpunk Hero Section */}
       <div className="relative h-[50vh] w-full overflow-hidden">
-        {/* Background gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-fuchsia-900/50 via-black to-black"></div>
         
-        {/* Grid overlay */}
         <div className="absolute inset-0 bg-[url('/cyber-grid.png')] opacity-20"></div>
         
-        {/* Animated scanlines */}
         <div className="absolute inset-0 bg-[url('/scanline.png')] opacity-10"></div>
         
-        {/* Hero content */}
         <div className="relative z-10 h-full flex flex-col items-center justify-center px-6">
           <h1 className="text-6xl md:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 via-red-500 to-cyan-400 text-center mb-4">
             MARVEL
@@ -49,11 +44,9 @@ export default async function Home() {
           </div>
         </div>
         
-        {/* Bottom fade */}
         <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black to-transparent"></div>
       </div>
       
-      {/* Main navigation */}
       <nav className="sticky top-0 z-50 bg-black/80 backdrop-blur-sm border-b border-cyan-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
@@ -79,7 +72,6 @@ export default async function Home() {
         </div>
       </nav>
 
-      {/* Carousel sections */}
       <div className="space-y-2">
         <Carousel
           items={characters.map((character) => {
@@ -126,7 +118,6 @@ export default async function Home() {
         />
       </div>
       
-      {/* Cyberpunk footer */}
       <footer className="mt-16 bg-gray-900 border-t border-fuchsia-900">
         <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

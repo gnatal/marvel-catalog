@@ -28,16 +28,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Add favicon and other meta tags here */}
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white min-h-screen`}
       >
-        {/* Background effects */}
         <div className="fixed inset-0 bg-[url('/cyber-grid.png')] opacity-5 pointer-events-none z-0"></div>
         <div className={`fixed inset-0 bg-[url('/scanline.png')] opacity-10 pointer-events-none z-0 ${styles.scanline}`}></div>
         
-        {/* Main content */}
         <div className="relative z-10 flex flex-col min-h-screen pb-16 md:pb-0">
           <DesktopNavBar />
           <main className="flex-grow">
@@ -45,7 +42,6 @@ export default function RootLayout({
           </main>
           <MobileNavBar />
           
-          {/* Cyberpunk footer - visible on desktop only */}
           <footer className="hidden md:block bg-black/80 border-t border-cyan-900/30 py-4 mt-8">
             <div className="container mx-auto px-4">
               <div className="flex justify-between items-center">

@@ -37,7 +37,6 @@ export default async function CharacterPage({
     );
   }
 
-  // Format character description
   const formatDescription = (desc: string) => {
     if (!desc) return "No neural profile data available.";
     return desc;
@@ -120,7 +119,6 @@ export default async function CharacterPage({
                   </div>
                 </div>
 
-                {/* Additional metadata */}
                 <div className="bg-black/50 border border-gray-800 p-4">
                   <div className="flex items-center mb-2">
                     <div className="h-2 w-2 bg-fuchsia-500 rounded-full mr-2"></div>

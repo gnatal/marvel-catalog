@@ -1,7 +1,7 @@
-import { getAllCharacters } from "@/intergations/marvel/characters/getAll";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "@/components/carrousel/index.module.css";
+import { getAllCharacters } from "@/intergations/marvel/characters/service";
 
 export default async function Characters() {
   const characters = await getAllCharacters();

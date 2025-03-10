@@ -1,5 +1,5 @@
+import { getSeriesById } from "@/intergations/marvel/series/service";
 import Link from "next/link";
-import { getEventById } from "@/intergations/marvel/events/getById";
 
 export default async function SeriePage({
   params,
@@ -7,7 +7,7 @@ export default async function SeriePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const event = await getEventById(parseInt(id));
+  const event = await getSeriesById(parseInt(id));
 
   if (!event) {
     return (

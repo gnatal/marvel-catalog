@@ -1,7 +1,7 @@
 import Carousel from "@/components/carrousel";
 import { getAllCharacters } from "@/intergations/marvel/characters/getAll";
-import { getAllComics } from "@/intergations/marvel/comics/getAll";
-import { getAllEvents } from "@/intergations/marvel/events/getAll";
+import { getAllComics } from "@/intergations/marvel/comics/service";
+import { getAllEvents } from "@/intergations/marvel/events/service";
 import { getAllSeries } from "@/intergations/marvel/series/getAll";
 import Link from "next/link";
 

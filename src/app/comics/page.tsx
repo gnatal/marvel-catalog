@@ -1,7 +1,7 @@
-import { getAllComics } from "@/intergations/marvel/comics/getAll";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "@/components/carrousel/index.module.css";
+import { getAllComics } from "@/intergations/marvel/comics/service";
 
 export default async function Comics() {
   const comics = await getAllComics();

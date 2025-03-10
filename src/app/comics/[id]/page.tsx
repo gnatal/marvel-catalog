@@ -1,9 +1,11 @@
-import { getComicsCharacters } from "@/intergations/marvel/comics/characters/getComicsCharacterById";
-import { getComicsById } from "@/intergations/marvel/comics/getById";
 import Image from "next/image";
 import styles from "@/components/carrousel/index.module.css";
 import Carousel from "@/components/carrousel";
 import Link from "next/link";
+import { getComicById } from "@/intergations/marvel/comics/service";
+import { getComicCharacters } from "@/intergations/marvel/comics/service";
+import { getComicCreators } from "@/intergations/marvel/comics/service";
+import { getComicEvents } from "@/intergations/marvel/comics/service";
 
 export default async function ComicPage({
   params,
@@ -11,9 +13,7 @@ export default async function ComicPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const comic = await getComicsById(parseInt(id));
-  const characters = await getComicsCharacters(parseInt(id));
-  console.log(characters);
+  const comic = await getComicById(parseInt(id));
 
   if (!comic) {
     return (
@@ -30,11 +30,44 @@ export default async function ComicPage({
     );
   }
 
+  // Fetch all related data for this comic
+  const [characters, creators, events] = await Promise.all([
+    getComicCharacters(comic.id),
+    getComicCreators(comic.id),
+    getComicEvents(comic.id)
+  ]);
+
   // Format comic description
   const formatDescription = (desc: string) => {
     if (!desc) return "No data available for this publication.";
     return desc;
   };
+
+  // Transform data for carousels
+  const characterItems = characters.map(character => ({
+    title: character.name,
+    url: `/characters/${character.id}`,
+    image: `${character.thumbnail.path}.${character.thumbnail.extension}`
+  }));
+
+  const creatorItems = creators.map(creator => ({
+    title: `${creator.fullName} ("Creator"})`,
+    url: `/creators/${creator.id}`,
+    image: `${creator.thumbnail.path}.${creator.thumbnail.extension}`
+  }));
+
+  const eventItems = events.map(event => ({
+    title: event.title,
+    url: `/events/${event.id}`,
+    image: `${event.thumbnail.path}.${event.thumbnail.extension}`
+  }));
+
+  // Series data is directly from comic object since there's no getComicSeries endpoint
+  const seriesItems = comic.series ? [{
+    title: comic.series.name,
+    url: `/series/${comic.series.resourceURI.split('/').pop()}`,
+    image: `/api/placeholder/400/600` // Placeholder since we don't have series image
+  }] : [];
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -137,7 +170,7 @@ export default async function ComicPage({
                     return null;
                   })}
                   
-                  {/* Creators section */}
+                  {/* Creators section - inline summary */}
                   {comic.creators && comic.creators.items && comic.creators.items.length > 0 && (
                     <div className="md:col-span-2 mt-2">
                       <div className="text-xs text-cyan-400 mb-2">CREATOR.DATA</div>
@@ -151,34 +184,134 @@ export default async function ComicPage({
                       </div>
                     </div>
                   )}
+                  
+                  {/* Diamond code and UPC if available */}
+                  {comic.diamondCode && (
+                    <div>
+                      <div className="text-xs text-cyan-400 mb-1">DIAMOND.CODE</div>
+                      <div className="text-sm font-mono">{comic.diamondCode}</div>
+                    </div>
+                  )}
+                  
+                  {comic.upc && (
+                    <div>
+                      <div className="text-xs text-cyan-400 mb-1">UPC.CODE</div>
+                      <div className="text-sm font-mono">{comic.upc}</div>
+                    </div>
+                  )}
                 </div>
+                
+                {/* URLs/Resources */}
+                {comic.urls && comic.urls.length > 0 && (
+                  <div className="bg-black/50 border border-gray-800 p-4">
+                    <div className="flex items-center mb-2">
+                      <div className="h-2 w-2 bg-cyan-500 rounded-full mr-2"></div>
+                      <span className="text-cyan-400 text-xs">EXTERNAL.RESOURCES</span>
+                    </div>
+                    <div className="space-y-2">
+                      {comic.urls.map((url, index) => (
+                        <a 
+                          key={index}
+                          href={url.url} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-gray-400 hover:text-cyan-400 transition-colors flex items-center"
+                        >
+                          <span className="text-xs text-cyan-500 mr-2">[{url.type.toUpperCase()}]</span>
+                          <span>Access {url.type} data</span>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </div>
       </div>
       
-      {/* Characters section */}
-      {characters && characters.length > 0 && (
-        <div className="container mx-auto px-4 py-8">
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 inline-block">
-              FEATURED.CHARACTERS
-            </h2>
-            <div className="h-px flex-grow ml-4 bg-gradient-to-r from-fuchsia-500 via-cyan-400 to-transparent"></div>
+      {/* Related content sections */}
+      <div className="container mx-auto px-4 py-8">
+        {/* Characters section */}
+        {characterItems.length > 0 && (
+          <div className="mb-12">
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 inline-block">
+                FEATURED.CHARACTERS
+              </h2>
+              <div className="h-px flex-grow ml-4 bg-gradient-to-r from-fuchsia-500 via-cyan-400 to-transparent"></div>
+              <p className="text-gray-500 text-sm mt-2 font-mono">
+                CHARACTER.COUNT:{characterItems.length}
+              </p>
+            </div>
+            
+            <Carousel 
+              title="Characters" 
+              items={characterItems} 
+            />
           </div>
-          
-          {/* Characters carousel */}
-          <Carousel 
-            title="Characters" 
-            items={characters.map((character) => ({
-              image: `${character.thumbnail.path}.${character.thumbnail.extension}`,
-              title: character.name,
-              url: `/characters/${character.id}`,
-            }))} 
-          />
-        </div>
-      )}
+        )}
+        
+        {/* Creators section */}
+        {creatorItems.length > 0 && (
+          <div className="mb-12">
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 inline-block">
+                CONTENT.ARCHITECTS
+              </h2>
+              <div className="h-px flex-grow ml-4 bg-gradient-to-r from-fuchsia-500 via-cyan-400 to-transparent"></div>
+              <p className="text-gray-500 text-sm mt-2 font-mono">
+                CREATORS.COUNT:{creatorItems.length}
+              </p>
+            </div>
+            
+            <Carousel 
+              title="Creators" 
+              items={creatorItems} 
+            />
+          </div>
+        )}
+        
+        {/* Events section */}
+        {eventItems.length > 0 && (
+          <div className="mb-12">
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 inline-block">
+                RELATED.EVENTS
+              </h2>
+              <div className="h-px flex-grow ml-4 bg-gradient-to-r from-fuchsia-500 via-cyan-400 to-transparent"></div>
+              <p className="text-gray-500 text-sm mt-2 font-mono">
+                EVENTS.COUNT:{eventItems.length}
+              </p>
+            </div>
+            
+            <Carousel 
+              title="Events" 
+              items={eventItems} 
+            />
+          </div>
+        )}
+        
+        {/* Series section */}
+        {seriesItems.length > 0 && (
+          <div className="mb-12">
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 inline-block">
+                PARENT.SERIES
+              </h2>
+              <div className="h-px flex-grow ml-4 bg-gradient-to-r from-fuchsia-500 via-cyan-400 to-transparent"></div>
+              <p className="text-gray-500 text-sm mt-2 font-mono">
+                SERIES.DATA
+              </p>
+            </div>
+            
+            <Carousel 
+              title="Series" 
+              items={seriesItems} 
+            />
+          </div>
+        )}
+      </div>
       
       {/* Bottom decorative element */}
       <div className="h-16 bg-gradient-to-t from-black to-transparent"></div>

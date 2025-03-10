@@ -1,7 +1,7 @@
-import { getAllEvents } from "@/intergations/marvel/events/getAll";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "@/components/carrousel/index.module.css";
+import { getAllEvents } from "@/intergations/marvel/events/service";
 
 export default async function Events() {
   const events = await getAllEvents();

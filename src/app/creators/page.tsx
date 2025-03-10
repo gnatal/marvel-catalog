@@ -1,7 +1,7 @@
-import { getAllCreators } from "@/intergations/marvel/creators/getAll";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "@/components/carrousel/index.module.css";
+import { getAllCreators } from "@/intergations/marvel/creators/service";
 
 export default async function Creators() {
   const creators = await getAllCreators();

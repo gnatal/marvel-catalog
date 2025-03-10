@@ -1,15 +1,15 @@
 import Link from "next/link";
-import { getCreatorById } from "@/intergations/marvel/creators/getById";
+import { getEventById } from "@/intergations/marvel/events/getById";
 
-export default async function CreatorPage({
+export default async function SeriePage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const creator = await getCreatorById(parseInt(id));
+  const event = await getEventById(parseInt(id));
 
-  if (!creator) {
+  if (!event) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-black">
         <div className="cyber-box p-6 max-w-md">

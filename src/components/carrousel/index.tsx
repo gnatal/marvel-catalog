@@ -16,7 +16,6 @@ interface CarouselProps {
 const Carousel: React.FC<CarouselProps> = ({ items, title }) => {
   return (
     <div className={`relative w-screen py-6 px-4 bg-black ${styles["no-scrollbar"]}`}>
-      {/* Cyberpunk section title with neon effect */}
       <div className="flex items-center mb-6">
         <h2 className="text-3xl font-bold relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 inline-block">
           {title}
@@ -24,7 +23,6 @@ const Carousel: React.FC<CarouselProps> = ({ items, title }) => {
         <div className="h-px flex-grow ml-4 bg-gradient-to-r from-fuchsia-500 via-cyan-400 to-transparent"></div>
       </div>
       
-      {/* Carousel content */}
       <div className={`w-full flex overflow-x-auto space-x-6 py-4 ${styles["no-scrollbar"]}`}>
         {items.map((item, index) => (
           <Link
@@ -32,13 +30,10 @@ const Carousel: React.FC<CarouselProps> = ({ items, title }) => {
             key={index}
             className="group flex-shrink-0 p-1 w-52 bg-gray-900 rounded border border-cyan-900 hover:border-cyan-400 transition-all duration-300 relative overflow-hidden"
           >
-            {/* Glitch effect overlay */}
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-cyan-900/30 opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
             
-            {/* Card inner border glow on hover */}
             <div className="absolute inset-0 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 bg-gradient-to-r from-fuchsia-500/20 to-cyan-500/20"></div>
             
-            {/* Card content */}
             <div className="relative z-10 p-0.5">
               <div className="relative w-full h-56 overflow-hidden">
                 <Image
@@ -48,17 +43,14 @@ const Carousel: React.FC<CarouselProps> = ({ items, title }) => {
                   height={224}
                   className="rounded w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-                {/* Scanline effect */}
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60 z-10"></div>
                 <div className={`absolute inset-0 bg-[url('/scanline.png')] opacity-10 group-hover:opacity-30 transition-opacity z-20 ${styles.scanline}`}></div>
               </div>
               
-              {/* Title with cyberpunk effect */}
               <div className="p-3 bg-gray-900">
                 <h3 className="text-lg font-medium text-white group-hover:text-cyan-400 transition-colors line-clamp-2">
                   {item.title}
                 </h3>
-                {/* Cyber line decoration */}
                 <div className="h-0.5 w-1/2 mt-2 bg-gradient-to-r from-fuchsia-500 to-cyan-400"></div>
               </div>
             </div>

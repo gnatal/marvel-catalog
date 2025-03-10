@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Background -->
+  <rect width="200" height="200" rx="10" fill="#0f0f1a" />
+  
+  <!-- Glowing Grid Background -->
+  <g opacity="0.3">
+    <path d="M0 40 H200 M0 80 H200 M0 120 H200 M0 160 H200" stroke="#00ffff" stroke-width="1" />
+    <path d="M40 0 V200 M80 0 V200 M120 0 V200 M160 0 V200" stroke="#00ffff" stroke-width="1" />
+  </g>
+  
+  <!-- Cyberpunk Glow Effects -->
+  <circle cx="100" cy="100" r="75" fill="none" stroke="#ff005b" stroke-width="4" opacity="0.5">
+    <animate attributeName="r" values="65;72;65" dur="4s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0.3;0.7;0.3" dur="4s" repeatCount="indefinite" />
+  </circle>
+  
+  <!-- Marvel-inspired Shield -->
+  <circle cx="100" cy="100" r="60" fill="#1a1a2e" stroke="#ff005b" stroke-width="2" />
+  
+  <!-- Stylized M for Marvel -->
+  <path d="M70 70 L80 130 L100 100 L120 130 L130 70" 
+        fill="none" stroke="#00ffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <animate attributeName="stroke" values="#00ffff;#ff005b;#00ffff" dur="8s" repeatCount="indefinite" />
+  </path>
+  
+  <!-- API Text -->
+  <text x="100" y="150" font-family="Arial, sans-serif" font-weight="bold" font-size="20" 
+        fill="#ffffff" text-anchor="middle">API</text>
+  
+  <!-- Digital Circuit Lines -->
+  <path d="M30 30 L50 30 L50 50 M170 30 L150 30 L150 50 M30 170 L50 170 L50 150 M170 170 L150 170 L150 150" 
+        stroke="#00ffff" stroke-width="3" fill="none" />
+  
+  <!-- Glitch Effect -->
+  <g>
+    <path d="M70 40 H130" stroke="#ff005b" stroke-width="2" opacity="0.7">
+      <animate attributeName="y1" values="40;42;40" dur="0.3s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.7;0;0.7" dur="1s" repeatCount="indefinite" />
+    </path>
+    <path d="M60 160 H140" stroke="#00ffff" stroke-width="2" opacity="0.7">
+      <animate attributeName="y1" values="160;158;160" dur="0.5s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.7;0.1;0.7" dur="0.8s" repeatCount="indefinite" />
+    </path>
+  </g>
+  
+  <!-- Digital Particles -->
+  <g fill="#ffffff">
+    <circle cx="40" cy="40" r="1.5">
+      <animate attributeName="opacity" values="1;0;1" dur="2s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="160" cy="40" r="1.5">
+      <animate attributeName="opacity" values="0;1;0" dur="3s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="40" cy="160" r="1.5">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2.5s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="160" cy="160" r="1.5">
+      <animate attributeName="opacity" values="1;0;1" dur="1.5s" repeatCount="indefinite" />
+    </circle>
+  </g>
+</svg>

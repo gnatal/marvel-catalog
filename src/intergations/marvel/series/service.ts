@@ -15,17 +15,26 @@ const API_URL = env.MARVEL_API_URL;
 const PUBLIC_KEY = env.MARVEL_API_PUBLIC_KEY || "";
 const PRIVATE_KEY = env.MARVEL_API_PRIVATE_KEY || "";
 
-export const getAllSeries = async () => {
-  const response = await fetch(
-    `${API_URL}/v1/public/series${generateAuthParams(PUBLIC_KEY, PRIVATE_KEY)}`
-  );
+export const getAllSeries = async (titleStartsWith?: string, limit?: number, offset?: number) => {
+  let url = `${API_URL}/v1/public/series${generateAuthParams(PUBLIC_KEY, PRIVATE_KEY)}`;
+  
+  if (titleStartsWith) {
+    url += `&titleStartsWith=${titleStartsWith}`;
+  }
+
+  if (limit) {
+    url += `&limit=${limit}`;
+  }
+
+  if (offset) {
+    url += `&offset=${offset}`;
+  }
+  
+  const response = await fetch(url);
   const data = (await response.json()) as MarvelResponse<MarvelSeries>;
-  return data.data.results;
+  return data.data;
 };
 
-/**
- * Fetches a single series by ID
- */
 export const getSeriesById = async (id: number) => {
   const response = await fetch(
     `${API_URL}/v1/public/series/${id}${generateAuthParams(PUBLIC_KEY, PRIVATE_KEY)}`
@@ -34,9 +43,6 @@ export const getSeriesById = async (id: number) => {
   return data.data.results[0];
 };
 
-/**
- * Fetches characters appearing in a specific series
- */
 export const getSeriesCharacters = async (seriesId: number) => {
   const response = await fetch(
     `${API_URL}/v1/public/series/${seriesId}/characters${generateAuthParams(PUBLIC_KEY, PRIVATE_KEY)}`

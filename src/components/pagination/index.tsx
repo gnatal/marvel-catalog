@@ -20,7 +20,6 @@ const Pagination = ({
   paginationInfo,
   preserveParams = {}
 }: PaginationProps) => {
-  // Get page numbers to display
   const getPageNumbers = () => {
     const pageNumbers = [];
     const maxPagesToShow = 5;
@@ -42,19 +41,15 @@ const Pagination = ({
 
   const pageNumbers = getPageNumbers();
   
-  // Generate URL with preserved params
   const generateUrl = (page: number) => {
-    // Start with the base URL
     let url = `${baseUrl}?page=${page}`;
     
-    // Add any preserved params
     const paramEntries = Object.entries(preserveParams);
     if (paramEntries.length > 0) {
       paramEntries.forEach(([key, value], index) => {
         // Skip empty values
         if (!value) return;
         
-        // If it's the first param after page, add the & character
         if (index === 0) {
           url += `&${key}=${encodeURIComponent(value)}`;
         } else {
@@ -79,7 +74,6 @@ const Pagination = ({
         </div>
 
         <div className="flex justify-center items-center space-x-2">
-          {/* First page button */}
           <Link
             href={generateUrl(1)}
             className={`w-10 h-10 flex items-center justify-center border ${
@@ -106,7 +100,6 @@ const Pagination = ({
             </svg>
           </Link>
 
-          {/* Previous page button */}
           <Link
             href={generateUrl(Math.max(1, currentPage - 1))}
             className={`w-10 h-10 flex items-center justify-center border ${
@@ -133,7 +126,6 @@ const Pagination = ({
             </svg>
           </Link>
 
-          {/* Page numbers */}
           {pageNumbers.map((pageNum) => (
             <Link
               key={pageNum}
@@ -149,7 +141,6 @@ const Pagination = ({
             </Link>
           ))}
 
-          {/* Next page button */}
           <Link
             href={generateUrl(Math.min(totalPages, currentPage + 1))}
             className={`w-10 h-10 flex items-center justify-center border ${
@@ -176,7 +167,6 @@ const Pagination = ({
             </svg>
           </Link>
 
-          {/* Last page button */}
           <Link
             href={generateUrl(totalPages)}
             className={`w-10 h-10 flex items-center justify-center border ${

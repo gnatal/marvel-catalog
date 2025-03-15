@@ -11,14 +11,10 @@ import {
   MarvelStory 
 } from "../types";
 
-// Base URL for Marvel API
 const API_URL = env.MARVEL_API_URL;
 const PUBLIC_KEY = env.MARVEL_API_PUBLIC_KEY || "";
 const PRIVATE_KEY = env.MARVEL_API_PRIVATE_KEY || "";
 
-/**
- * Fetches a list of all Marvel series
- */
 export const getAllSeries = async () => {
   const response = await fetch(
     `${API_URL}/v1/public/series${generateAuthParams(PUBLIC_KEY, PRIVATE_KEY)}`
@@ -49,9 +45,6 @@ export const getSeriesCharacters = async (seriesId: number) => {
   return data.data.results;
 };
 
-/**
- * Fetches comics that are part of a specific series
- */
 export const getSeriesComics = async (seriesId: number) => {
   const response = await fetch(
     `${API_URL}/v1/public/series/${seriesId}/comics${generateAuthParams(PUBLIC_KEY, PRIVATE_KEY)}`
@@ -60,9 +53,6 @@ export const getSeriesComics = async (seriesId: number) => {
   return data.data.results;
 };
 
-/**
- * Fetches creators involved in a specific series
- */
 export const getSeriesCreators = async (seriesId: number) => {
   const response = await fetch(
     `${API_URL}/v1/public/series/${seriesId}/creators${generateAuthParams(PUBLIC_KEY, PRIVATE_KEY)}`
@@ -71,9 +61,7 @@ export const getSeriesCreators = async (seriesId: number) => {
   return data.data.results;
 };
 
-/**
- * Fetches events that are part of a specific series
- */
+
 export const getSeriesEvents = async (seriesId: number) => {
   const response = await fetch(
     `${API_URL}/v1/public/series/${seriesId}/events${generateAuthParams(PUBLIC_KEY, PRIVATE_KEY)}`
@@ -82,9 +70,6 @@ export const getSeriesEvents = async (seriesId: number) => {
   return data.data.results;
 };
 
-/**
- * Fetches stories that are part of a specific series
- */
 export const getSeriesStories = async (seriesId: number) => {
   const response = await fetch(
     `${API_URL}/v1/public/series/${seriesId}/stories${generateAuthParams(PUBLIC_KEY, PRIVATE_KEY)}`
@@ -93,9 +78,6 @@ export const getSeriesStories = async (seriesId: number) => {
   return data.data.results;
 };
 
-/**
- * Searches for series by title
- */
 export const searchSeries = async (titleStartsWith: string) => {
   const params = new URLSearchParams({ titleStartsWith });
   const authParams = generateAuthParams(PUBLIC_KEY, PRIVATE_KEY).substring(1);
@@ -108,9 +90,6 @@ export const searchSeries = async (titleStartsWith: string) => {
   return data.data.results;
 };
 
-/**
- * Fetches series by a specific time period (publishing years)
- */
 export const getSeriesByPeriod = async (startYear: number, endYear: number = startYear) => {
   const params = new URLSearchParams({
     startYear: startYear.toString(),
@@ -126,9 +105,6 @@ export const getSeriesByPeriod = async (startYear: number, endYear: number = sta
   return data.data.results;
 };
 
-/**
- * Fetches series by type (e.g., "collection", "one shot", "limited", "ongoing")
- */
 export const getSeriesByType = async (seriesType: string) => {
   const params = new URLSearchParams({ seriesType });
   const authParams = generateAuthParams(PUBLIC_KEY, PRIVATE_KEY).substring(1);

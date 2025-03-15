@@ -2,7 +2,7 @@ import Carousel from "@/components/carrousel";
 import { getAllCharacters } from "@/intergations/marvel/characters/service";
 import { getAllComics } from "@/intergations/marvel/comics/service";
 import { getAllEvents } from "@/intergations/marvel/events/service";
-import { getAllSeries } from "@/intergations/marvel/series/getAll";
+import { getAllSeries } from "@/intergations/marvel/series/service";
 import Link from "next/link";
 
 export default async function Home() {

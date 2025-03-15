@@ -54,7 +54,7 @@ export default async function Characters({
       <div className="container mx-auto px-4 mb-8">
       <AlphabetFilter
           currentFilter={letterFilter as string}
-          baseUrl="/comics"
+          baseUrl="/characters"
           searchParams={queryParams}
         />
 

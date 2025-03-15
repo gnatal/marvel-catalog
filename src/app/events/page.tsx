@@ -9,7 +9,7 @@ import ResultsCounter from "@/components/resultsCounter";
 export default async function Events({
   searchParams,
 }: {
-  searchParams?: { [key: string]: string | string[] | undefined };
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const queryParams = await searchParams;
   const letterFilter = queryParams?.letter || "";

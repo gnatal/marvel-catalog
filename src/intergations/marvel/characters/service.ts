@@ -8,12 +8,24 @@ const PUBLIC_KEY = env.MARVEL_API_PUBLIC_KEY || "";
 const PRIVATE_KEY = env.MARVEL_API_PRIVATE_KEY || "";
 
 
-export const getAllCharacters = async () => {
-  const response = await fetch(
-    `${API_URL}/v1/public/characters${generateAuthParams(PUBLIC_KEY, PRIVATE_KEY)}`
-  );
+export const getAllCharacters = async (nameStartsWith?: string, limit?: number, offset?: number) => {
+  let url = `${API_URL}/v1/public/characters${generateAuthParams(PUBLIC_KEY, PRIVATE_KEY)}`;
+  
+  if (nameStartsWith) {
+    url += `&nameStartsWith=${nameStartsWith}`;
+  }
+
+  if (limit) {
+    url += `&limit=${limit}`;
+  }
+
+  if (offset) {
+    url += `&offset=${offset}`;
+  }
+  
+  const response = await fetch(url);
   const data = (await response.json()) as MarvelResponse<MarvelCharacter>;
-  return data.data.results;
+  return data.data;
 };
 
 export const getCharacterById = async (id: number) => {

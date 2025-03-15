@@ -6,13 +6,15 @@ import { getAllSeries } from "@/intergations/marvel/series/service";
 import Link from "next/link";
 
 export default async function Home() {
-  const characters = await getAllCharacters();
+  const charactersResult = await getAllCharacters();
   const comicsResults = await getAllComics();
-  const events = await getAllEvents();
+  const eventsResult = await getAllEvents();
   const series = await getAllSeries();
 
   const comics = comicsResults.results;
-
+  const characters = charactersResult.results;
+  const events = eventsResult.results;
+  
   return (
     <div className="min-h-screen w-screen overflow-x-hidden bg-black text-white">
       <div className="relative h-[50vh] w-full overflow-hidden">

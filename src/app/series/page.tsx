@@ -2,9 +2,34 @@ import { getAllSeries } from "@/intergations/marvel/series/service";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "@/components/carrousel/index.module.css";
+import AlphabetFilter from "@/components/alphabetFilter";
+import Pagination from "@/components/pagination";
+import ResultsCounter from "@/components/resultsCounter";
 
-export default async function Series() {
-  const series = await getAllSeries();
+export default async function Series({
+  searchParams,
+}: {
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
+  const queryParams = await searchParams;
+  const letterFilter = queryParams?.letter || "";
+  const currentPage = queryParams?.page
+    ? parseInt(queryParams.page as string)
+    : 1;
+  
+  const ITEMS_PER_PAGE = 20;
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+  
+  const data = await getAllSeries(letterFilter as string, ITEMS_PER_PAGE, offset);
+  const series = data.results;
+  const paginationInfo = {
+    offset: data?.offset,
+    limit: data?.limit,
+    total: data?.total,
+    count: data?.count,
+  };
+  
+  const totalPages = Math.ceil(paginationInfo.total / ITEMS_PER_PAGE);
   
   return (
     <div className="min-h-screen bg-black text-white">
@@ -25,67 +50,129 @@ export default async function Series() {
         </div>
       </div>
       
+      <div className="container mx-auto px-4 mb-8">
+        <AlphabetFilter 
+          currentFilter={letterFilter as string} 
+          baseUrl="/series" 
+          searchParams={queryParams}
+        />
+      </div>
+
+      <div className="container mx-auto px-4 mb-6">
+        <ResultsCounter 
+          count={series.length} 
+          total={paginationInfo.total}
+          filterLabel="starting with" 
+          filterValue={letterFilter as string}
+        />
+      </div>
+      
       <div className="container mx-auto px-4 pb-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-          {series.map((serie) => (
-            <Link 
-              href={`/series/${serie.id}`} 
-              key={serie.id} 
-              className="group relative bg-gray-900 border border-gray-800 hover:border-cyan-900 transition-all duration-300 rounded overflow-hidden"
-            >
-              <div className="relative aspect-[2/3] overflow-hidden">
-                <Image
-                  src={`${serie.thumbnail.path}.${serie.thumbnail.extension}`}
-                  alt={serie.title}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70 group-hover:opacity-60 transition-opacity z-10"></div>
-                <div className={`absolute inset-0 bg-[url('/scanline.png')] opacity-10 group-hover:opacity-30 transition-opacity z-20 ${styles.scanline}`}></div>
-                
-                <div className="absolute top-3 left-3 bg-black/80 backdrop-blur-sm px-2 py-1 text-xs font-mono text-cyan-400 border border-cyan-900/50 z-30">
-                  {serie.startYear}{serie.endYear !== serie.startYear ? `-${serie.endYear === 2099 ? 'PRESENT' : serie.endYear}` : ''}
-                </div>
-                
-                {serie.rating && serie.rating !== '' && (
-                  <div className="absolute top-3 right-3 bg-black/80 backdrop-blur-sm px-2 py-1 text-xs font-mono text-fuchsia-400 border border-fuchsia-900/50 z-30">
-                    {serie.rating}
+        {series.length > 0 ? (
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+              {series.map((serie) => (
+                <Link 
+                  href={`/series/${serie.id}`} 
+                  key={serie.id} 
+                  className="group relative bg-gray-900 border border-gray-800 hover:border-cyan-900 transition-all duration-300 rounded overflow-hidden"
+                >
+                  <div className="relative aspect-[2/3] overflow-hidden">
+                    <Image
+                      src={`${serie.thumbnail.path}.${serie.thumbnail.extension}`}
+                      alt={serie.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70 group-hover:opacity-60 transition-opacity z-10"></div>
+                    <div className={`absolute inset-0 bg-[url('/scanline.png')] opacity-10 group-hover:opacity-30 transition-opacity z-20 ${styles.scanline}`}></div>
+                    
+                    <div className="absolute top-3 left-3 bg-black/80 backdrop-blur-sm px-2 py-1 text-xs font-mono text-cyan-400 border border-cyan-900/50 z-30">
+                      {serie.startYear}{serie.endYear !== serie.startYear ? `-${serie.endYear === 2099 ? 'PRESENT' : serie.endYear}` : ''}
+                    </div>
+                    
+                    {serie.rating && serie.rating !== '' && (
+                      <div className="absolute top-3 right-3 bg-black/80 backdrop-blur-sm px-2 py-1 text-xs font-mono text-fuchsia-400 border border-fuchsia-900/50 z-30">
+                        {serie.rating}
+                      </div>
+                    )}
+                    
+                    {serie.type && serie.type !== '' && (
+                      <div className="absolute bottom-3 right-3 bg-black/80 backdrop-blur-sm px-2 py-1 text-xs font-mono text-white border border-gray-700 z-30">
+                        {serie.type}
+                      </div>
+                    )}
                   </div>
-                )}
-                
-                {serie.type && serie.type !== '' && (
-                  <div className="absolute bottom-3 right-3 bg-black/80 backdrop-blur-sm px-2 py-1 text-xs font-mono text-white border border-gray-700 z-30">
-                    {serie.type}
+                  
+                  <div className="p-4 border-t border-gray-800 group-hover:border-cyan-900/50 transition-colors bg-black">
+                    <h3 className="text-sm md:text-base font-medium text-white group-hover:text-cyan-400 transition-colors line-clamp-2 min-h-[2.5rem]">
+                      {serie.title}
+                    </h3>
+                    
+                    <div className="h-0.5 w-12 mt-3 bg-gradient-to-r from-fuchsia-500 to-cyan-400 transform origin-left scale-0 group-hover:scale-100 transition-transform duration-300"></div>
+                    
+                    <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
+                      <div className="flex items-center space-x-1">
+                        <span className="text-gray-500 font-mono">COMICS:</span>
+                        <span className="text-cyan-500 font-mono">{serie.comics?.available || 0}</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <span className="text-gray-500 font-mono">CHARS:</span>
+                        <span className="text-fuchsia-500 font-mono">{serie.characters?.available || 0}</span>
+                      </div>
+                    </div>
                   </div>
-                )}
+                  
+                  <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/10 to-fuchsia-500/10 opacity-0 group-hover:opacity-40 mix-blend-overlay transition-opacity pointer-events-none"></div>
+                  
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-500 to-fuchsia-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+                </Link>
+              ))}
+            </div>
+            
+            <Pagination 
+              currentPage={currentPage}
+              totalPages={totalPages}
+              baseUrl="/series"
+              paginationInfo={paginationInfo}
+              preserveParams={{ letter: letterFilter as string }}
+            />
+          </>
+        ) : (
+          <div className="text-center py-16">
+            <div className="inline-block border border-gray-800 p-6 rounded">
+              <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center border border-cyan-900 rounded-full">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-8 w-8 text-cyan-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                  />
+                </svg>
               </div>
-              
-              <div className="p-4 border-t border-gray-800 group-hover:border-cyan-900/50 transition-colors bg-black">
-                <h3 className="text-sm md:text-base font-medium text-white group-hover:text-cyan-400 transition-colors line-clamp-2 min-h-[2.5rem]">
-                  {serie.title}
-                </h3>
-                
-                <div className="h-0.5 w-12 mt-3 bg-gradient-to-r from-fuchsia-500 to-cyan-400 transform origin-left scale-0 group-hover:scale-100 transition-transform duration-300"></div>
-                
-                <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
-                  <div className="flex items-center space-x-1">
-                    <span className="text-gray-500 font-mono">COMICS:</span>
-                    <span className="text-cyan-500 font-mono">{serie.comics?.available || 0}</span>
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    <span className="text-gray-500 font-mono">CHARS:</span>
-                    <span className="text-fuchsia-500 font-mono">{serie.characters?.available || 0}</span>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/10 to-fuchsia-500/10 opacity-0 group-hover:opacity-40 mix-blend-overlay transition-opacity pointer-events-none"></div>
-              
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-500 to-fuchsia-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
-            </Link>
-          ))}
-        </div>
+              <h3 className="text-cyan-400 font-mono text-lg mb-2">
+                NO RESULTS FOUND
+              </h3>
+              <p className="text-gray-400 font-mono text-sm">
+                {`No series found starting with '${letterFilter}'`}
+              </p>
+              <Link
+                href="/series"
+                className="mt-4 inline-block px-4 py-2 border border-cyan-900 text-cyan-400 hover:bg-cyan-900/20 transition-colors"
+              >
+                VIEW ALL SERIES
+              </Link>
+            </div>
+          </div>
+        )}
       </div>
       
       <div className="relative h-24 overflow-hidden">

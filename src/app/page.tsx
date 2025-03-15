@@ -2,14 +2,16 @@ import Carousel from "@/components/carrousel";
 import { getAllCharacters } from "@/intergations/marvel/characters/service";
 import { getAllComics } from "@/intergations/marvel/comics/service";
 import { getAllEvents } from "@/intergations/marvel/events/service";
-import { getAllSeries } from "@/intergations/marvel/series/getAll";
+import { getAllSeries } from "@/intergations/marvel/series/service";
 import Link from "next/link";
 
 export default async function Home() {
   const characters = await getAllCharacters();
-  const comics = await getAllComics();
+  const comicsResults = await getAllComics();
   const events = await getAllEvents();
   const series = await getAllSeries();
+
+  const comics = comicsResults.results;
 
   return (
     <div className="min-h-screen w-screen overflow-x-hidden bg-black text-white">

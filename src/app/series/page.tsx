@@ -1,4 +1,4 @@
-import { getAllSeries } from "@/intergations/marvel/series/getAll";
+import { getAllSeries } from "@/intergations/marvel/series/service";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "@/components/carrousel/index.module.css";

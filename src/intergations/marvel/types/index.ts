@@ -67,6 +67,7 @@ export type MarvelCharacter = {
   }[];
 };
 
+
 export type MarvelComics = {
   id: number;
   digitalId: number;

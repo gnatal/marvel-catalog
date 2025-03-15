@@ -7,9 +7,11 @@ import Link from "next/link";
 
 export default async function Home() {
   const characters = await getAllCharacters();
-  const comics = await getAllComics();
+  const comicsResults = await getAllComics();
   const events = await getAllEvents();
   const series = await getAllSeries();
+
+  const comics = comicsResults.results;
 
   return (
     <div className="min-h-screen w-screen overflow-x-hidden bg-black text-white">

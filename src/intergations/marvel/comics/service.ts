@@ -7,28 +7,32 @@ import {
   MarvelCharacter, 
   MarvelCreator, 
   MarvelEvent, 
-  MarvelStory 
+  MarvelStory, 
 } from "../types";
 
-// Base URL for Marvel API
 const API_URL = env.MARVEL_API_URL;
 const PUBLIC_KEY = env.MARVEL_API_PUBLIC_KEY || "";
 const PRIVATE_KEY = env.MARVEL_API_PRIVATE_KEY || "";
+export const getAllComics = async (titleStartsWith?: string, limit?: number, offset?: number) => {
+  let url = `${API_URL}/v1/public/comics${generateAuthParams(PUBLIC_KEY, PRIVATE_KEY)}`;
+  
+  if (titleStartsWith) {
+    url += `&titleStartsWith=${titleStartsWith}`;
+  }
 
-/**
- * Fetches a list of all Marvel comics
- */
-export const getAllComics = async () => {
-  const response = await fetch(
-    `${API_URL}/v1/public/comics${generateAuthParams(PUBLIC_KEY, PRIVATE_KEY)}`
-  );
+  if (limit) {
+    url += `&limit=${limit}`;
+  }
+
+  if (offset) {
+    url += `&offset=${offset}`;
+  }
+  
+  const response = await fetch(url);
   const data = (await response.json()) as MarvelResponse<MarvelComics>;
-  return data.data.results;
+  return data.data;
 };
 
-/**
- * Fetches a single comic by ID
- */
 export const getComicById = async (id: number) => {
   const response = await fetch(
     `${API_URL}/v1/public/comics/${id}${generateAuthParams(PUBLIC_KEY, PRIVATE_KEY)}`
@@ -37,9 +41,6 @@ export const getComicById = async (id: number) => {
   return data.data.results[0];
 };
 
-/**
- * Fetches characters appearing in a specific comic
- */
 export const getComicCharacters = async (comicId: number) => {
   const response = await fetch(
     `${API_URL}/v1/public/comics/${comicId}/characters${generateAuthParams(PUBLIC_KEY, PRIVATE_KEY)}`
@@ -48,9 +49,6 @@ export const getComicCharacters = async (comicId: number) => {
   return data.data.results;
 };
 
-/**
- * Fetches creators of a specific comic
- */
 export const getComicCreators = async (comicId: number) => {
   const response = await fetch(
     `${API_URL}/v1/public/comics/${comicId}/creators${generateAuthParams(PUBLIC_KEY, PRIVATE_KEY)}`
@@ -59,9 +57,6 @@ export const getComicCreators = async (comicId: number) => {
   return data.data.results;
 };
 
-/**
- * Fetches events in which a specific comic appears
- */
 export const getComicEvents = async (comicId: number) => {
   const response = await fetch(
     `${API_URL}/v1/public/comics/${comicId}/events${generateAuthParams(PUBLIC_KEY, PRIVATE_KEY)}`
@@ -70,9 +65,6 @@ export const getComicEvents = async (comicId: number) => {
   return data.data.results;
 };
 
-/**
- * Fetches stories contained in a specific comic
- */
 export const getComicStories = async (comicId: number) => {
   const response = await fetch(
     `${API_URL}/v1/public/comics/${comicId}/stories${generateAuthParams(PUBLIC_KEY, PRIVATE_KEY)}`
@@ -81,9 +73,6 @@ export const getComicStories = async (comicId: number) => {
   return data.data.results;
 };
 
-/**
- * Searches for comics by title
- */
 export const searchComics = async (titleStartsWith: string) => {
   const params = new URLSearchParams({ titleStartsWith });
   const authParams = generateAuthParams(PUBLIC_KEY, PRIVATE_KEY).substring(1); // Remove the leading '?'
@@ -96,9 +85,6 @@ export const searchComics = async (titleStartsWith: string) => {
   return data.data.results;
 };
 
-/**
- * Fetches comics by year
- */
 export const getComicsByYear = async (year: number) => {
   const startDate = `${year}-01-01`;
   const endDate = `${year}-12-31`;
